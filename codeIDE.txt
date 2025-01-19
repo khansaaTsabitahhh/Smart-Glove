@@ -1,0 +1,186 @@
+#include <Wire.h>
+#include <WiFi.h>
+#include <Firebase_ESP_Client.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <addons/TokenHelper.h>
+// Firebase credentials
+#define FIREBASE_HOST "https://smart-glove-86cb6-defaultrtdb.firebaseio.com/"
+#define FIREBASE_AUTH "AIzaSyB39CZ69dkJuXG2JHoKHr3jkSY4H90e0qQ"
+// WiFi credentials
+#define WIFI_SSID "ZTE_2.4G_ZKgath"
+#define WIFI_PASSWORD "27082023"
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+// Deklarasi SSD1306 display connected to I2C (SDA, SCL pins)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+const int MPU_ADDR = 0x68; // alamat I2C MPU6050
+//pin untuk sensor flex
+const int flexSensorPin1 = 34; // GPIO34 (Analog pin)
+const int flexSensorPin2 = 35; // GPIO35 (Analog pin)
+const int flexSensorPin3 = 36; // GPIO36 (Analog pin)
+const int flexSensorPin4 = 39; // GPIO36 (Analog pin)
+const int flexSensorPin5 = 32; // GPIO32 (Analog pin)
+// Define Firebase data object
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
+unsigned long sendDataPrevMillis = 0;
+int count = 0;
+bool signupOK = false;
+void setup() {
+ Wire.begin();
+ Serial.begin(115200);
+ if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+ Serial.println(F("SSD1306 allocation failed"));
+ for(;;);
+ }
+ delay(2000);
+ display.clearDisplay();
+ display.setTextSize(2);
+ display.setTextColor(WHITE);
+ display.setCursor(0, 10);
+
+// Display static text
+ display.println("SMART GLOVE");
+ display.display(); 
+ // Initialize WiFi connection
+ WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+ Serial.print("Connecting to WiFi");
+ while (WiFi.status() != WL_CONNECTED) {
+ delay(500);
+ Serial.print(".");
+ }
+ Serial.println(" connected!");
+ // Configure Firebase
+ config.host = FIREBASE_HOST;
+ config.signer.tokens.legacy_token = FIREBASE_AUTH;
+ // Sign up
+ if (Firebase.signUp(&config, &auth, "", "")) {
+ Serial.println("ok");
+ signupOK = true;
+ } else {
+ Serial.printf("%s\n", 
+config.signer.signupError.message.c_str());
+ }
+ // Assign the callback function for the long running token 
+generation task
+ config.token_status_callback = tokenStatusCallback; // see 
+addons/TokenHelper.h
+ // Initialize Firebase
+ Firebase.begin(&config, &auth);
+ Wire.beginTransmission(MPU_ADDR);
+ Wire.write(0x6B); // PWR_MGMT_1 register
+ Wire.write(0); // Set to active mode
+ Wire.endTransmission(true);
+ pinMode(flexSensorPin1, INPUT);
+ pinMode(flexSensorPin2, INPUT);
+ pinMode(flexSensorPin3, INPUT);
+ pinMode(flexSensorPin4, INPUT);
+ pinMode(flexSensorPin5, INPUT);
+}
+void loop() {
+ if (Firebase.RTDB.getString(&fbdo, "/displayText")) {
+ String text = fbdo.stringData();
+ display.clearDisplay();
+ display.setCursor(0, 10);
+ display.print(text);
+ display.display();
+ Serial.print(text);
+ } else {
+ Serial.println("Failed to get value");
+
+ Serial.println(fbdo.errorReason());
+ }
+ 
+ Wire.beginTransmission(MPU_ADDR);
+ Wire.write(0x3B); // ACCEL_XOUT_H register
+ Wire.endTransmission(false);
+ Wire.requestFrom(MPU_ADDR, 14, true);
+ int16_t acc_x = (Wire.read() << 8 | Wire.read());
+ int16_t acc_y = (Wire.read() << 8 | Wire.read());
+ int16_t acc_z = (Wire.read() << 8 | Wire.read());
+ int flexValue1 = analogRead(flexSensorPin1);
+ int flexValue2 = analogRead(flexSensorPin2);
+ int flexValue3 = analogRead(flexSensorPin3);
+ int flexValue4 = analogRead(flexSensorPin4);
+ int flexValue5 = analogRead(flexSensorPin5);
+ String output = "Sensor values: ";
+ output += "Sensor 1 = ";
+ output += flexValue1;
+ output += ", Sensor 2 = ";
+ output += flexValue2;
+ output += ", Sensor 3 = ";
+ output += flexValue3;
+output += ", Sensor 4 = ";
+output += flexValue4;
+output += ", Sensor 5 = ";
+output += flexValue5;
+output += ", Acc X= ";
+output += acc_x;
+output += ", Acc Y= ";
+output += acc_y;
+output += ", Acc Z= ";
+output += acc_z;
+ 
+ Serial.println(output);
+ String signLanguageTranslation = 
+translateToSignLanguage(flexValue1, flexValue2, flexValue3, flexValue4, flexValue5, acc_x, acc_y, acc_z);
+ // Print the translation to the Serial Monitor
+ Serial.println("Sign Language Translation: " + signLanguageTranslation);
+ if (Firebase.RTDB.setString(&fbdo, "/pesan", 
+signLanguageTranslation)) {
+ Serial.println("Sign Language Translation stored successfully");
+ } else {
+ Serial.println("Failed to store Sign Language Translation");
+ }
+ // Wait for 1 second before reading again
+ delay(1000);
+
+String translateToSignLanguage(int flexValue1, int flexValue2, int flexValue3, int flexValue4, int flexValue5, int16_t acc_x, int16_t acc_y, int16_t acc_z) {
+ 
+ if (flexValue1 < 350 && flexValue2 < 275 && flexValue3 < 200 && flexValue4 < 450 && flexValue5 < 300 && acc_x > 10000 && acc_y > 100 && acc_z <2000) {
+ return "Assalamualaikum"; // a
+ }
+ else if (flexValue1 < 300 && flexValue2 > 500 && flexValue3 > 250 && flexValue4 > 600 && flexValue5 > 450 && acc_x > 1000 && acc_y > 1000 && acc_z <1) {
+ return "Hallo"; // b
+ }
+ else if (flexValue1 < 350 && flexValue2 > 600 && flexValue3 > 250 && flexValue4 > 600 && flexValue5 < 300 && acc_x > 10000 && acc_y > 1000 && acc_z <100) {
+ return "Waalaikumsalam"; // W
+ }
+ else if (flexValue1 > 450 && flexValue2 > 525 && flexValue3 > 300 && flexValue4 > 600 && flexValue5 > 500 && acc_x > 4000 && acc_y < 100 && acc_z > 1000) {
+ return "Terima kasih"; // 
+ }
+ else if (flexValue1 > 430 && flexValue2 < 275 && flexValue3 < 180 && flexValue4 <450 && flexValue5 > 500 && acc_x > 1000 && acc_y < 5000 && acc_z <1) {
+ return "Sama-sama"; //"Y"
+ }
+ else if (flexValue1 > 400 && flexValue2 <300 && flexValue3 < 200 && flexValue4 < 450 && flexValue5 < 400 && acc_x > 10000 && acc_y > 1 && acc_z <1) {
+ return "Minum"; // C
+ }
+ else if (flexValue1 > 400 && flexValue2 <500 && flexValue3 < 250 && flexValue4 < 625 && flexValue5 > 300 && acc_x > 10000 && acc_y < 1 && acc_z <1) {
+ return "Makan"; // 
+ }
+ else if (flexValue1 < 300 && flexValue2 > 450 && flexValue3 < 150 && flexValue4 < 350 && flexValue5 < 300 && acc_x > 10000 && acc_y < 1 && acc_z <1 ) {
+ return "Diam"; // D 
+ }
+ else if (flexValue1 < 300 && flexValue2 < 250 && flexValue3 < 200 && flexValue4 <400 && flexValue5 > 550 && acc_x < 10000 && acc_y < 1 && acc_z <3000) {
+ return "Takut"; //i6
+ }
+ else if (flexValue1 > 400 && flexValue2 > 600 && flexValue3 < 170 && flexValue4 < 450 && flexValue5 > 500 && acc_x > 1000 && acc_y <1 && acc_z <3000) {
+ return "I Love You"; // 
+ }
+ else if (flexValue1 < 300 && flexValue2 < 250 && flexValue3 > 200 && flexValue4 >600 && flexValue5 > 500 && acc_x > 10000 && acc_y <3000 && acc_z <3000) {
+
+ return "Maaf"; // F
+ }
+ else if (flexValue1 > 480 && flexValue2 > 600 && flexValue3 > 300 && flexValue4 >600 && flexValue5 < 450 && acc_x > 1000 && acc_y <5000 && acc_z <1) {
+ return "Tidur"; 
+ }
+ else if (flexValue1 > 280 && flexValue2 > 600 && flexValue3 > 300 && flexValue4 <400 && flexValue5 < 300 && acc_x < 1000 && acc_y <50 && acc_z <1) {
+ return "Aku";
+ }
+ else if (flexValue1 < 300 && flexValue2 > 600 && flexValue3 > 300 && flexValue4 >600 && flexValue5 > 500 && acc_x > 1000 && acc_y <10 && acc_z >1000) {
+ return "Kamu"; 
+ }
+ return "Pesan anda"; // If no known gesture is detected
+}

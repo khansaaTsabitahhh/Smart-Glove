@@ -1,0 +1,433 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Roboto", serif;
+}
+
+:root{
+    --bg-color: #0c0c0c;
+    --text-color: #fff;
+    --main-color: #ae8957;
+    --big-font: 6.6rem;
+    --p-font: 1.2rem;
+}
+
+body{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    background: url(img/bg.png);
+    background-size: cover;
+    background-position: center;
+}
+
+header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #262424;
+    z-index: 1000;
+    padding: 20px 5%;
+    border-bottom: 1px solid #0c0c0c;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.header-logo {
+    font-size: 25px;
+    color: var(--text-color);
+    font-weight: 600;
+    transition: all .6s ease;
+    font-family: 'Courier New',monospace;
+}
+
+.header-logo:hover{
+    color: var(--main-color);
+    text-shadow: 0 0 25px var(--main-color),
+                 0 0 50px var(--main-color);
+    transform: scale(1.1);
+}
+
+.navlist{
+    display: flex;
+}
+
+.navlist a{
+    display: inline-block;
+    margin: 0 35px;
+    color: var(--text-color);
+    font-size: var(--p-font);
+    transition: all .6s ease;
+}
+
+.navlist a:hover{
+    color: var(--main-color);
+}
+
+.contact{
+    display: inline-block;
+    padding: 9px 24px;
+    background: transparent;
+    border: 2px solid var(--text-color);
+    border-radius: 7px;
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 500;
+    transition: all .6s ease;
+}
+
+.contact:hover{
+    transform: translateY(-5px);
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+}
+
+section{
+    padding: 0px 14%;
+}
+
+.home{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 2rem;
+}
+
+.home-text h1{
+    font-size: var(--big-font);
+    font-weight: 900;
+    margin: 15px 0;
+    text-shadow: 0 0 25px var(--main-color);
+}
+
+.home-text h3{
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.home-img img{
+        width: 80%;
+        height: auto; 
+}
+
+.about {
+    gap: 2rem;
+    padding: 20px;
+}
+
+.about-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.about h2{
+    margin-top: 20px;
+    color: var(--text-color);
+    font-size: 30px;
+    text-shadow: 0 0 25px var(--main-color);
+    text-align: center;
+}
+
+.about-main img{
+    max-width: 25%;
+    height: auto;
+}
+
+.about p{
+    width: 100%;
+    max-width: 600px;
+    font-size: var(--p-font);
+    font-weight: 400;
+    line-height: 32px;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.design {
+    gap: 2rem;
+    padding: 20px;
+    margin: 25px;
+}
+
+.design h2{
+    color: var(--text-color);
+    font-size: 30px;
+    text-shadow: 0 0 25px var(--main-color);
+    text-align: center;
+}
+
+.cara-kerja {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 30px;
+}
+
+.cara-kerja img{
+    max-width: 50%;
+    height: auto;
+}
+
+.cara-kerja p{
+    width: 100%;
+    max-width: 600px;
+    font-size: var(--p-font);
+    font-weight: 400;
+    line-height: 32px;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.design h3{
+    margin: 20px;
+    color: var(--main-color);
+    font-size: 28px;
+    text-shadow: 0 0 25px var(--main-color);
+    text-align: center;
+}
+
+.realisation{
+    gap: 2rem;
+    padding: 20px;
+    margin: 25px;
+    align-items: center;
+}
+
+.realisation h2{
+    color: var(--text-color);
+    font-size: 30px;
+    text-shadow: 0 0 25px var(--main-color);
+    text-align: center;
+}
+
+.realisation h3{
+    margin: 20px;
+    color: var(--main-color);
+    font-size: 30px;
+    text-shadow: 0 0 25px var(--main-color);
+    text-align: center;
+}
+
+.realisation-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 30px;   
+}
+
+.realisation-div p{
+    width: 100%;
+    max-width: 600px;
+    font-size: var(--p-font);
+    font-weight: 400;
+    line-height: 32px;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.realisation-div img{
+    max-width: 35%;
+    height: auto;
+}
+
+.download-btn {
+    display: inline-block;
+    padding: 9px 24px;
+    background: transparent;
+    border: 2px solid var(--text-color);
+    border-radius: 7px;
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 500;
+    transition: all .6s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-5px);
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.sof-img img{
+    max-height: 1920px;
+    max-width: 1080px;
+}
+
+.final{
+    gap: 2rem;
+    padding: 20px;
+    margin: 25px;
+}
+
+.final h2{
+    color: var(--text-color);
+    font-size: 30px;
+    text-shadow: 0 0 25px var(--main-color);
+    text-align: center;
+}
+
+.final h3{
+    margin: 20px;
+    color: var(--main-color);
+    font-size: 28px;
+    text-shadow: 0 0 25px var(--main-color);
+    text-align: center;
+}
+
+.realisation-divv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 30px;
+    gap: 30px;   
+}
+
+.video-container {
+    width: 100%;
+    max-width: 560px; 
+    aspect-ratio: 16 / 9; 
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+  .video-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+footer {
+    background-color: #262424;
+    text-align: center;
+    color: var(--text-color);
+    padding: 10px;
+    font-weight: bold;
+    gap: 10px;
+}
+
+footer h4{
+    font-size: 25px;
+    padding: 10px;
+}
+
+/* Untuk layar kecil (mobile) */
+@media (max-width: 768px) {
+    /* Mengubah ukuran font */
+    :root {
+        --big-font: 4rem;
+        --p-font: 1rem;
+    }
+
+    /* Menyesuaikan grid pada homepage */
+    .home {
+        grid-template-columns: 1fr;
+        padding: 0 5%;
+    }
+
+    /* Mengubah gambar di bagian home untuk responsif */
+    .home-img img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Mengubah layout header */
+    header {
+        padding: 15px 5%;
+    }
+
+    .navlist {
+        display: block;
+        text-align: center;
+    }
+
+    .navlist a {
+        margin: 10px 0;
+    }
+
+    /* Mengubah ukuran gambar di bagian about */
+    .about-main img {
+        max-width: 50%;
+    }
+
+    /* Mengubah padding dan margin di bagian design */
+    .design, .realisation, .final {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    /* Menyesuaikan ukuran tombol */
+    .contact, .download-btn {
+        padding: 7px 20px;
+        font-size: 14px;
+    }
+
+    /* Menyesuaikan layout footer */
+    footer {
+        padding: 20px;
+    }
+}
+
+/* Untuk layar tablet */
+@media (max-width: 1024px) {
+    /* Mengubah ukuran font */
+    :root {
+        --big-font: 5rem;
+    }
+
+    /* Menyesuaikan layout homepage */
+    .home {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 10%;
+    }
+
+    /* Mengubah gambar di bagian home */
+    .home-img img {
+        width: 90%;
+        height: auto;
+    }
+
+    /* Menyesuaikan header */
+    header {
+        padding: 20px 5%;
+    }
+
+    /* Menyesuaikan menu navigasi */
+    .navlist a {
+        margin: 0 20px;
+    }
+
+    .about-main img {
+        max-width: 35%;
+    }
+
+    .cara-kerja img {
+        max-width: 45%;
+    }
+
+    .realisation-div img {
+        max-width: 40%;
+    }
+
+    /* Menyesuaikan tombol */
+    .contact, .download-btn {
+        padding: 8px 22px;
+        font-size: 16px;
+    }
+}

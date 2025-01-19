@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Glove Portofolio</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sacramento&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="#home" class="header-logo">Smart Glove</a>
+
+        <nav class="navlist">
+            <li><a href="#about">About</a></li>
+            <li><a href="#design">Design</a></li>
+            <li><a href="#realisation">Realization</a></li>
+            <li><a href="#final">Final Result</a></li>
+        </nav>
+
+        <a href="https://wa.me/6288802229093" class="contact">Contact Me</a>
+    </header>
+    
+    <section class="home" id="home">
+        <div class="home-text">
+            <h3>Design And Build</h3>
+            <h1>SMART GLOVE</h1>
+            <h3>For Sign Language Interpreter Based On Android</h3>
+        </div>
+        <div class="home-img">
+            <img src="img/homesl.png" alt="Sign Language">
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <br><br><br>
+        <h2>ABOUT THIS PROJECT</h2>
+        <div class="about-main">    
+            <img src="img/jnknl.png">
+            <p>This Final Project designs a Smart Glove as an Android-based sign language interpreter to help communication between deaf people and people who do not understand sign language. This system uses ESP32 as a microcontroller, flex sensor, and MPU6050 sensor to detect finger movement and hand position. The sensor data is processed and sent to the Android application via Firebase Realtime Database for translation into text. The components of the device are placed on a fabric glove for ease of use and portability. The Android app, developed with Android Studio, has various features such as registration, login, conversation, and sign language learning. Users can view the sign language translation in real-time and send reply messages displayed on the OLED in the glove.</p>
+        </div>
+    </section>
+
+    <section id="design" class="design">
+        <br><br><br>
+        <h2>DESIGN</h2>
+        <h3>System Design</h3>
+        <div class="cara-kerja">  
+            <p>The work process of the tool is divided into 3 parts, namely input, process and output. In the input section there is a flex sensor to detect the curves of the fingers and an MPU6050 sensor to detect the rotation and shift of the hand which is connected to the ESP32 module. In the process section consists of ESP32 which is connected to the internet via WiFi. The output section consists of OLED that will display the reply text from the application, and the Android application that is used to receive sign language translation data in the form of text and voice. The tool and android application must be connected to the internet network to be able to work properly. </p>
+            <img src="img/diagramblok.png" alt="">
+        </div>
+    </section>
+
+    <section class="realisation" id="realisation">
+        <br><br><br>
+        <h2>HARDWARE REALIZATION</h2><br>
+        <h3>Circuit Diagram </h3>
+        <div class="realisation-div">
+            <p>The realisation of the sign language translator is by connecting the components with the ESP32 microcontroller. Connecting the components with the ESP32 is done by combining the component pins to the microcontroller pins. The schematic of the sign language translator circuit as a whole can be seen in the following figure.</p>
+
+            <img src="img/skemmm.png" alt="">
+        </div>
+
+        <br><h3>Sensor Flex Value Data</h3>
+        <div class="realisation-div">
+            <p>The parameters for the five flex sensors used to define hand movements were obtained.  The following is the data taken from each sensor when the finger is moved to form the fourteen basic gestures of sign language based on the Indonesian Sign Language (SIBI) standard. 
+            </p>
+            <img src="img/flex.png" alt="">
+        </div>
+
+        <br><h3>MPU6050 Value Data</h3>
+        <div class="realisation-div">
+            <p>MPU6050 is used to detect hand gestures. Several size parameters were obtained for each movement. The parameters are the x, y, and z axes obtained from the MPU6050 accelerator sensor. 
+            </p>
+            <img src="img/mpu.png" alt="">
+        </div>
+        <br><h3>Arduino IDE Code Program</h3>
+        <br>
+        <div class="realisation-div">
+            <p class="downloadd">Tap the button to download code program</p>
+            <a href="codeIDE.txt" class="download-btn" download>Download File</a>
+        </div>
+        <br><br><br>
+        <h2>SOFTWARE REALIZATION</h2>
+
+        <br><h3>Application View</h3>
+        <div class="realisation-div">
+        <img src="img/1.png" class="soft-img">
+        <img src="img/2.png" aclass="soft-img">
+        <img src="img/3.png" class="soft-img">
+        <img src="img/4.png" class="soft-img">
+        <img src="img/5.png" class="soft-img">
+        </div>
+
+        <br><h3>Application Download</h3>
+        <div class="realisation-div">
+            <p class="downloadd">Tap the button to download application</p>
+            <a href="SmartGlove.apk" class="download-btn" download>Download File</a>
+        </div>
+    </section>
+
+    <section class="final" id="final">
+        <br><br><br>
+        <h2>FINAL RESULT</h2>
+        <br><h3>Application View</h3>
+        <div class="realisation-divv">
+        <img src="img/6.png" >
+        <img src="img/7.png" >
+        <img src="img/8.png" >
+        <img src="img/9.png" >
+        </div>
+
+        <br><h3>Percentage of Success Rate</h3>
+        <div class="realisation-div">
+        <img src="img/persentase.png" alt="">
+        <p>Sign language word testing was conducted with five trials for each word. The test results show the accuracy level of Smart Gloved in translating sign language gestures into proper text. Overall Overall, the average accuracy reached 87.14%. The percentage of success is calculated based on the number of successful tests compared to the total number of trials conducted for each word.</p>
+        </div>
+
+        <br><h3>Short Demonstration</h3>
+        <div class="realisation-div">
+        <div class="video-container">
+            <iframe 
+              src="https://www.youtube.com/embed/fQZNRIPSy2w" 
+              title="YouTube video player" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+        </div>
+        </div>
+    </section>
+
+    <footer>
+        <h4>Khansa Tsabitah</h4>
+        <p>D3 Telekomunikasi - Politeknik Negeri Jakarta</p>
+
+    </footer>
+
+</body>
+</html>
